@@ -16,10 +16,14 @@ extension Request {
     ///   the request's private container or failed type conversion of the value.
     public func get<Stored>(_ key: String, as stored: Stored.Type = Stored.self)throws -> Stored? {
         let storage = try self.privateContainer.make(Storage.self)
+        
         guard let found = storage.cache[key] else { return nil }
+        if found == nil { return nil }
+        
         guard let value = found as? Stored else {
             throw Abort(.internalServerError, reason: "Unable to get value for key '\(key)' as type \(String(describing: stored))")
         }
+        
         return value
     }
     
@@ -31,7 +35,7 @@ extension Request {
     ///   - value: The value to store with the given key.
     /// - Throws: Errors when getting the `Storage` service from
     ///   the request's private container.
-    public func set(_ key: String, to value: Any)throws {
+    public func set(_ key: String, to value: Any?)throws {
         let storage = try self.privateContainer.make(Storage.self)
         storage.cache[key] = value
     }

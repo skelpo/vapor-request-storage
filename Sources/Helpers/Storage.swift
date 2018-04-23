@@ -7,7 +7,7 @@ import Service
 public class Storage: Service {
     
     /// The underlying dictionary that holds everything.
-    public var cache: [String: Any] = [:]
+    public var cache: [String: Any?] = [:]
     
     ///
     public init() {}
