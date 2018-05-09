@@ -4,7 +4,18 @@ import Service
 /// in a single request.
 /// This type works with a request's `privateContainer`
 /// to hold the data.
-public class Storage: Service {
+public final class Storage: Service, ServiceType {
+    
+    /// Conforms `Storage` to `ServiceType`. This conformance
+    /// lets you register the `Storage` service using:
+    ///
+    ///     services.register(Storage.self)
+    ///
+    /// - Parameter worker: The container that `Storage` instance
+    ///   will be stored in.
+    public static func makeService(for worker: Container) throws -> Storage {
+        return Storage()
+    }
     
     /// The underlying dictionary that holds everything.
     public var cache: [String: Any?] = [:]
