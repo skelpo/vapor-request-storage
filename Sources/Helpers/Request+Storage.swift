@@ -39,4 +39,12 @@ extension Request {
         let storage = try self.privateContainer.make(Storage.self)
         storage.cache[key] = value
     }
+    
+    /// Gets the `Storage` instance from the
+    /// request's private container.
+    ///
+    /// - Returns: The request's private `Storage` instance.
+    public func storage()throws -> Storage {
+        return try self.privateContainer.make(Storage.self)
+    }
 }
